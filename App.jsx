@@ -50,7 +50,16 @@ const formatDuration = (mins) => {
 };
 
 const generateWhatsAppMessage = (name, service, date, time, magicLink) => {
-  return `¡Hola, ${name}! 🌸 Gracias por elegir Makeup Creativa.\n\nTu cita está confirmada:\n💅 Servicio: ${service}\n📅 Fecha: ${date}\n⏰ Hora: ${time}\n\n✨ Para ver los detalles o modificar tu cita (máximo 1 cambio permitido), accede a tu enlace personal y seguro aquí: ${magicLink}\n\n¡Te esperamos!`;
+  return `¡Hola, ${name}! 🌸 Gracias por elegir Makeup Creativa.
+
+Tu cita está confirmada:
+💅 Servicio: ${service}
+📅 Fecha: ${date}
+⏰ Hora: ${time}
+
+✨ Para ver los detalles o modificar tu cita (máximo 1 cambio permitido), accede a tu enlace personal y seguro aquí: ${magicLink}
+
+¡Te esperamos!`;
 };
 
 const getCategoryColor = (category = '') => {
@@ -429,7 +438,6 @@ function ClientMagicManage({ token, theme, services, appointments, workingHours,
         const slotEnd = currentMins + durationMins;
         let overlap = false;
 
-        // Revisar otras citas (excluyendo la suya propia)
         const dayApts = appointments.filter(a => a.date === newDate && a.id !== apt.id);
         for (let other of dayApts) {
           const oStart = timeToMins(other.time);
@@ -439,7 +447,6 @@ function ClientMagicManage({ token, theme, services, appointments, workingHours,
             overlap = true;
           }
         }
-        // Revisar bloqueos parciales
         const dayBlocks = blocks.filter(b => b.date === newDate && !b.isAllDay);
         for (let b of dayBlocks) {
           const bStart = timeToMins(b.startTime);
